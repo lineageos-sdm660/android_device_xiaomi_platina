@@ -13,7 +13,7 @@ function blob_fixup() {
             perl -pi -e 's/\xdb\xf8\x00\x10\x08\x9a\x49\x6b\xc6\xe9\x04\x21/\xdb\xf8\x00\x10\x08\x9a\x89\x6c\xc6\xe9\x04\x21/g' "${2}"
             ;;
         vendor/lib/libMiCameraHal.so)
-            ${PATCHELF} --add-needed "libpiex-v29.so" "${2}"
+            grep -q "libpiex_shim.so" "${2}" || "${PATCHELF}" --add-needed "libpiex_shim.so" "${2}"
             ;;
         *)
             return 1
